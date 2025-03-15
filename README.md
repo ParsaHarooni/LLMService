@@ -86,7 +86,7 @@ poetry run uvicorn llm_service.main:app --reload
 
 Example API request:
 ```bash
-curl -X POST http://localhost:8000/api/v1/analyze \
+curl -X POST http://localhost:8000/analyze \
   -H "Content-Type: application/json" \
   -d '{"function_code": "def add(a, b): return a + b"}'
 ```
@@ -100,14 +100,3 @@ llm_service/
 ├── providers/      # LLM provider implementations
 └── tests/          # Test suite
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Run tests with Nox
-4. Submit a pull request
-
-## License
-
-[Your chosen license] 
