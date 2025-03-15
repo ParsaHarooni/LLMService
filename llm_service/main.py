@@ -20,4 +20,4 @@ app.add_middleware(
 )
 
 # Include the router
-app.include_router(router, prefix="/api/v1")
+app.include_router(router)

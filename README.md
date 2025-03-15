@@ -1,100 +1,113 @@
-# LLM Service (AI Gateway)
+# LLM Service
 
-A FastAPI-based microservice that acts as a gateway to various LLM providers for code analysis.
+A FastAPI-based service that provides code analysis using various LLM providers (OpenAI, Deepseek, and Local models).
 
 ## Features
 
-- Support for multiple LLM providers (OpenAI, Deepseek, Local)
-- Provider selection via environment variables
-- Code analysis endpoint with standardized response format
-- FastAPI with async support
+- Multiple LLM provider support (OpenAI, Deepseek, Local)
+- FastAPI-based REST API
+- JSON-formatted code analysis suggestions
 - Comprehensive test suite
-- Type checking with mypy
-- Code formatting with black
-- Linting with pylint
+- Type checking and linting
 
-## Setup
+## Requirements
 
-1. Install Poetry (package manager):
-   ```bash
-   curl -sSL https://install.python-poetry.org | python3 -
-   ```
+- Python 3.11+
+- Poetry for dependency management
+- Nox for automation
 
-2. Install dependencies:
-   ```bash
-   poetry install
-   ```
+## Installation
 
-3. Copy the environment file and configure your settings:
-   ```bash
-   cp .env.example .env
-   ```
-   Edit `.env` with your API keys and preferences.
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd llm-service
+```
 
-## Running the Service
+2. Install Poetry (if not already installed):
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
 
-1. Start the service:
-   ```bash
-   poetry run uvicorn llm_service.main:app --reload
-   ```
+3. Install dependencies:
+```bash
+poetry install
+```
 
-2. The API will be available at `http://localhost:8000`
-   - API documentation: `http://localhost:8000/docs`
-   - OpenAPI spec: `http://localhost:8000/openapi.json`
+4. Create a `.env` file with your configuration:
+```bash
+OPENAI_API_KEY=your_api_key
+OPENAI_MODEL=gpt-4
+DEEPSEEK_API_KEY=your_deepseek_key
+DEEPSEEK_MODEL=deepseek-chat-v3
+LOCAL_MODEL_PATH=/path/to/local/model  # Optional
+```
 
-## Usage
+## Development
 
-Send a POST request to `/api/v1/analyze` with your code:
+We use Nox for automating development tasks. Here are the available sessions:
 
+### Running Tests
+
+```bash
+# Run all tests
+nox -s tests
+
+# Run a specific test file
+nox -s tests -- tests/test_api.py
+
+# Run a specific test function
+nox -s tests -- tests/test_api.py::test_analyze_endpoint
+```
+
+### Code Quality
+
+```bash
+# Run linting (black)
+nox -s lint
+
+# Run type checking (mypy)
+nox -s type_check
+```
+
+### Running All Sessions
+
+```bash
+# Run all Nox sessions
+nox
+```
+
+## API Usage
+
+Start the server:
+```bash
+poetry run uvicorn llm_service.main:app --reload
+```
+
+Example API request:
 ```bash
 curl -X POST http://localhost:8000/api/v1/analyze \
   -H "Content-Type: application/json" \
   -d '{"function_code": "def add(a, b): return a + b"}'
 ```
 
-## Running Tests
-
-```bash
-poetry run pytest
-```
-
-## Development
-
-- Format code:
-  ```bash
-  poetry run black .
-  ```
-
-- Type checking:
-  ```bash
-  poetry run mypy .
-  ```
-
-- Linting:
-  ```bash
-  poetry run pylint llm_service
-  ```
-
-## Environment Variables
-
-- `LLM_PROVIDER`: Choose the LLM provider (`openai`, `deepseek`, or `local`)
-- `OPENAI_API_KEY`: Your OpenAI API key (if using OpenAI)
-- `OPENAI_MODEL`: OpenAI model to use (default: gpt-3.5-turbo)
-- `DEEPSEEK_API_KEY`: Your Deepseek API key (if using Deepseek)
-- `DEEPSEEK_MODEL`: Deepseek model to use
-- `LOCAL_MODEL_PATH`: Path to local model (if using local provider)
-
 ## Project Structure
 
 ```
 llm_service/
-├── api/
-│   ├── models.py      # Pydantic models
-│   └── router.py      # FastAPI router
-├── core/
-│   └── config.py      # Configuration and settings
-├── providers/
-│   ├── base.py        # Base provider interface
-│   └── openai_provider.py  # OpenAI implementation
-└── main.py            # FastAPI application
-``` 
+├── api/            # API endpoints and models
+├── core/           # Core configuration
+├── providers/      # LLM provider implementations
+└── tests/          # Test suite
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Run tests with Nox
+4. Submit a pull request
+
+## License
+
+[Your chosen license] 

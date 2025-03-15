@@ -42,7 +42,7 @@ def mock_openai_response():
 
 def test_analyze_endpoint(client, mock_openai_response):
     response = client.post(
-        "/api/v1/analyze", json={"function_code": "def add(a, b): return a + b"}
+        "/analyze", json={"function_code": "def add(a, b): return a + b"}
     )
 
     assert response.status_code == 200
