@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "llm-service"
+version = "0.1.0"
+description = "LLM Gateway Service for code analysis"
+authors = ["Parsa Harooni <prsishere@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.0"
+uvicorn = {extras = ["standard"], version = "^0.27.0"}
+pydantic = "^2.10.0"
+pydantic-settings = "^2.1.0"
+openai = "^1.12.0"
+python-dotenv = "^1.0.0"
+httpx = "^0.26.0"
+ctransformers = "^0.2.27"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+mypy = "^1.8.0"
+pylint = "^3.0.3"
+black = "^24.1.1"
+httpx = "^0.26.0"
+pytest-asyncio = "^0.23.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+[tool.pylint.messages_control]
+disable = ["C0111", "C0103"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39'] 
