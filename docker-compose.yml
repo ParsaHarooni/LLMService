@@ -17,7 +17,6 @@ services:
 
 networks:
   code_service_network:
-    driver: bridge
     name: code_service_network
     external: true
 
